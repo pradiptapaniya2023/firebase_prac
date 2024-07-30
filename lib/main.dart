@@ -9,7 +9,9 @@ void main() async {
         apiKey: "AIzaSyAjxK6Kq_yKYYX0FYorgCUBA7uHZUJMuyI",
         appId: "com.example.firebase_lecture_cc",
         messagingSenderId: "790553448833",
-        projectId: "fir-lecture-cc"),
+        projectId: "fir-lecture-cc",
+        storageBucket: "fir-lecture-cc.appspot.com"
+    ),
   );
   runApp(const MaterialApp(
     home: MainHomepage(),

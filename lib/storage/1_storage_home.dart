@@ -21,9 +21,7 @@ class _StoragehomeState extends State<Storagehome> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("asset/images/bg.jpg"), fit: BoxFit.cover)),
+        color: Colors.grey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
