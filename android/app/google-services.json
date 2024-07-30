@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "790553448833",
+    "project_id": "fir-lecture-cc",
+    "storage_bucket": "fir-lecture-cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790553448833:android:c83db144fd1d927e6b1880",
+        "android_client_info": {
+          "package_name": "com.example.firebase_lecture_cc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjxK6Kq_yKYYX0FYorgCUBA7uHZUJMuyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
