@@ -1,3 +1,4 @@
+import 'package:firebase_lecture_cc/real_time_database/1_home_database.dart';
 import 'package:firebase_lecture_cc/storage/1_storage_home.dart';
 import 'package:flutter/material.dart';
 import 'authentication/1_authen_home.dart';
@@ -71,6 +72,31 @@ class _MainHomepageState extends State<MainHomepage> {
                   child: Center(
                     child: Text(
                       "Storage",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return Realtimedatabase();
+                  },
+                ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.black, width: 2)),
+                  child: Center(
+                    child: Text(
+                      "Real Time Database",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),

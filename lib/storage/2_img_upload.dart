@@ -67,11 +67,15 @@ class _ImguploadState extends State<Imgupload> {
               height: 20,
             ),
             InkWell(
-              onTap: () {
+              onTap: () async {
                 final mountainImagesRef =
                     storageRef.child("images/${Random().nextInt(1000)}.jpg");
 
-                mountainImagesRef.putFile(File(image!.path));
+               await mountainImagesRef.putFile(File(image!.path));
+
+                String dowURL = await mountainImagesRef.getDownloadURL();
+
+                print("==> imageURL = ${dowURL}");
 
               },
               child: Container(
