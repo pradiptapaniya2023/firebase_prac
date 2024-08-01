@@ -69,7 +69,7 @@ class _ImguploadState extends State<Imgupload> {
             InkWell(
               onTap: () async {
                 final mountainImagesRef =
-                    storageRef.child("images/${Random().nextInt(1000)}.jpg");
+                    storageRef.child("imagesupload/image${Random().nextInt(1000)}.jpg");
 
                await mountainImagesRef.putFile(File(image!.path));
 
