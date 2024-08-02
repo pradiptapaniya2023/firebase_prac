@@ -4,8 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '2_1_userdetails_show.dart';
+import '2.1_showdata_streambuilder.dart';
 
 class Userdetails_db extends StatefulWidget {
   const Userdetails_db({super.key});
@@ -60,10 +59,15 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                           if (pickImage != null) {
                             image = File(pickImage.path);
 
-                            final storageRef = FirebaseStorage.instance.ref();
+                            final storageRef = FirebaseStorage.instance
+                                .ref("userdetails_storage");
                             final mountainImagesRef = storageRef.child(
                                 "userdata_db/image${Random().nextInt(1000)}.jpg");
                             await mountainImagesRef.putFile(File(image!.path));
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Firebase DB Added Image Successfully !")));
+
                             dowURL = await mountainImagesRef.getDownloadURL();
 
                             print("==> imageURL = ${dowURL}");
@@ -157,22 +161,27 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                     keyboardType: TextInputType.text,
                   )),
             ),
-            SizedBox(
-              height: 30,
-            ),
+
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: InkWell(
                 onTap: () async {
-                  DatabaseReference ref = FirebaseDatabase.instance.ref();
+                  DatabaseReference ref =
+                      FirebaseDatabase.instance.ref("user_db").push();
 
-                  await ref.push().set({
+                  await ref.set({
+                    "id": ref.key,
                     "name": name.text,
                     "email": email.text,
                     "mobilenumber": monumber.text,
                     "pass": password.text,
                     "imgae_link": dowURL!,
                   });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Firebase Added Data Successfully !")));
+
+                  print("==> userid = ${ref.key}");
 
                   setState(() {
                     name.text = "";
@@ -185,7 +194,7 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                 },
                 child: Container(
                   height: 50,
-                  width: 120,
+                  width: 200,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.circular(10)),
@@ -204,19 +213,44 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                 onTap: () async {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return Show_userdata();
+                      return Showdata_strambuilder();
                     },
                   ));
                 },
                 child: Container(
                   height: 50,
-                  width: 120,
+                  width: 200,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                     child: Text(
-                      "Show Data",
+                      "Show Data Stream",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: InkWell(
+                onTap: () async {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return Showdata_strambuilder();
+                    },
+                  ));
+                },
+                child: Container(
+                  height: 50,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 2),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: Text(
+                      "Show Data Future",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),

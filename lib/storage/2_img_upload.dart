@@ -12,7 +12,6 @@ class Imgupload extends StatefulWidget {
 }
 
 class _ImguploadState extends State<Imgupload> {
-  final storageRef = FirebaseStorage.instance.ref();
   File? image;
 
   @override
@@ -68,15 +67,20 @@ class _ImguploadState extends State<Imgupload> {
             ),
             InkWell(
               onTap: () async {
-                final mountainImagesRef =
-                    storageRef.child("imagesupload/image${Random().nextInt(1000)}.jpg");
+                final storageRef =
+                    FirebaseStorage.instance.ref("image_storage");
 
-               await mountainImagesRef.putFile(File(image!.path));
+                final mountainImagesRef =
+                    storageRef.child("image${Random().nextInt(1000)}.jpg");
+
+                await mountainImagesRef.putFile(File(image!.path));
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Firebase Added Image Successfully !")));
 
                 String dowURL = await mountainImagesRef.getDownloadURL();
 
                 print("==> imageURL = ${dowURL}");
-
               },
               child: Container(
                 height: 40,
