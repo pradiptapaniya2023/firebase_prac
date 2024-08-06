@@ -34,32 +34,43 @@ class _Showdata_strambuilderState extends State<Showdata_strambuilder> {
             print("==> streamLength = ${streamList.length}");
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      streamList[index]['imgae_link'] != null
-                          ? Center(
-                              child: CircleAvatar(radius: 70,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 2),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    streamList[index]['imgae_link'] != null
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                radius: 70,
                                 backgroundImage: NetworkImage(
                                     streamList[index]['imgae_link']),
                               ),
-                            )
-                          : CircleAvatar(
-                              child: Text(streamList[index]['name'][0])),
-                      Text(
-                        "id : ${streamList[index]['id']}",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      Text(streamList[index]['name']),
-                      Text(streamList[index]['email']),
-                      Text(streamList[index]['mobilenumber']),
-                    ],
-                  ),
+                            ),
+                          )
+                        : CircleAvatar(
+                            child: Text(streamList[index]['name'][0])),
+                    Text(
+                      "Id : ${streamList[index]['id']}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      "Name : ${streamList[index]['name']}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      "Email : ${streamList[index]['email']}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      "Mobile number : ${streamList[index]['mobilenumber']}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -70,6 +81,7 @@ class _Showdata_strambuilderState extends State<Showdata_strambuilder> {
   }
 
   fetchdata_stream() {
+    print("===>Enter fetch_stream function");
     DatabaseReference ref = FirebaseDatabase.instance.ref("user_db");
 
     streamList.clear();
