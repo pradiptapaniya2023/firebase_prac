@@ -1,41 +1,41 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class Showdata_strambuilder extends StatefulWidget {
-  const Showdata_strambuilder({super.key});
+class Showdata_futurebuilder extends StatefulWidget {
+  const Showdata_futurebuilder({super.key});
 
   @override
-  State<Showdata_strambuilder> createState() => _Showdata_strambuilderState();
+  State<Showdata_futurebuilder> createState() => _Showdata_futurebuilderState();
 }
 
-class _Showdata_strambuilderState extends State<Showdata_strambuilder> {
+class _Showdata_futurebuilderState extends State<Showdata_futurebuilder> {
+  List futureList = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchdata_stream();
+    fetchdata_future();
   }
-
-  List streamList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "SHOW USER DETAILS - STREAM",
+          "SHOW USER DETAILS - FUTURE",
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
-      body: streamList == null
+      body: futureList == null
           ? Center(child: CircularProgressIndicator())
           : Column(
-            children: [
-              Expanded(
+              children: [
+                Expanded(
                   child: ListView.builder(
-                    itemCount: streamList.length,
+                    itemCount: futureList.length,
                     itemBuilder: (context, index) {
-                      print("==> streamLength = ${streamList.length}");
+                      print("==> futureLength = ${futureList.length}");
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -45,33 +45,34 @@ class _Showdata_strambuilderState extends State<Showdata_strambuilder> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              streamList[index]['imgae_link'] != null
+                              futureList[index]['imgae_link'] != null
                                   ? Center(
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: CircleAvatar(
                                           radius: 70,
                                           backgroundImage: NetworkImage(
-                                              streamList[index]['imgae_link']),
+                                              futureList[index]['imgae_link']),
                                         ),
                                       ),
                                     )
                                   : CircleAvatar(
-                                      child: Text(streamList[index]['name'][0])),
+                                      child:
+                                          Text(futureList[index]['name'][0])),
                               Text(
-                                "Id : ${streamList[index]['id']}",
+                                "Id : ${futureList[index]['id']}",
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                "Name : ${streamList[index]['name']}",
+                                "Name : ${futureList[index]['name']}",
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                "Email : ${streamList[index]['email']}",
+                                "Email : ${futureList[index]['email']}",
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                "Mobile number : ${streamList[index]['mobilenumber']}",
+                                "Mobile number : ${futureList[index]['mobilenumber']}",
                                 style: TextStyle(fontSize: 20),
                               ),
                             ],
@@ -81,29 +82,25 @@ class _Showdata_strambuilderState extends State<Showdata_strambuilder> {
                     },
                   ),
                 ),
-            ],
-          ),
+              ],
+            ),
     );
   }
 
-  fetchdata_stream() {
-    print("===>Enter fetch_stream function");
+  fetchdata_future() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("user_db");
 
-    streamList.clear();
-    ref.onValue.listen(
-      (event) {
-        Map map = event.snapshot.value as Map;
+    await ref.once().then(
+      (value) {
+        Map map = value.snapshot.value as Map;
         map.forEach(
           (key, value) {
-            streamList.add(value);
+            futureList.add(value);
           },
         );
-        print("==> stream function = ${streamList}");
+        print("==> future function = ${futureList}");
         setState(() {});
       },
     );
-
-
   }
 }

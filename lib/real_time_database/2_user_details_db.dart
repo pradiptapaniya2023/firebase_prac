@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '2.1_showdata_streambuilder.dart';
+import '2.2_showdata_futurebuilder.dart';
 
 class Userdetails_db extends StatefulWidget {
   const Userdetails_db({super.key});
@@ -65,8 +66,9 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                                 "userdata_db/image${Random().nextInt(1000)}.jpg");
                             await mountainImagesRef.putFile(File(image!.path));
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Firebase DB Added Image Successfully !")));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Firebase DB Added Image Successfully !")));
 
                             dowURL = await mountainImagesRef.getDownloadURL();
 
@@ -161,7 +163,6 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                     keyboardType: TextInputType.text,
                   )),
             ),
-
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: InkWell(
@@ -178,8 +179,8 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                     "imgae_link": dowURL!,
                   });
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Firebase Added Data Successfully !")));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Firebase Added Data Successfully !")));
 
                   print("==> userid = ${ref.key}");
 
@@ -238,7 +239,7 @@ class _Userdetails_dbState extends State<Userdetails_db> {
                 onTap: () async {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return Showdata_strambuilder();
+                      return Showdata_futurebuilder();
                     },
                   ));
                 },

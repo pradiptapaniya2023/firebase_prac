@@ -33,7 +33,7 @@ class _Razorpaydemo1State extends State<Razorpaydemo1> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
       "Payment Successfully ${response.paymentId}",
-      style: TextStyle(color: Colors.black, fontSize: 20),
+      style: TextStyle(color: Colors.white, fontSize: 20),
     )));
   }
 
@@ -41,7 +41,7 @@ class _Razorpaydemo1State extends State<Razorpaydemo1> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
       "Payment Error ${response.code} - ${response.error}",
-      style: TextStyle(color: Colors.black, fontSize: 20),
+      style: TextStyle(color: Colors.white, fontSize: 20),
     )));
   }
 
@@ -49,7 +49,7 @@ class _Razorpaydemo1State extends State<Razorpaydemo1> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
       "Payment Wallet ${response.walletName}",
-      style: TextStyle(color: Colors.black, fontSize: 20),
+      style: TextStyle(color: Colors.white, fontSize: 20),
     )));
   }
 
