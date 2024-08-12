@@ -103,7 +103,5 @@ class _Showdata_strambuilderState extends State<Showdata_strambuilder> {
         setState(() {});
       },
     );
-
-
   }
 }
