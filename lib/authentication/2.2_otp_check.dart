@@ -1,26 +1,28 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '2.2_otp_check.dart';
+import '2_mobile_authen.dart';
 
-class MobileAuthen extends StatefulWidget {
-  const MobileAuthen({super.key});
+class OtpCheck extends StatefulWidget {
+  String verificationId;
+
+  OtpCheck({super.key, required this.verificationId});
 
   @override
-  State<MobileAuthen> createState() => _MobileAState();
+  State<OtpCheck> createState() => _OtpCheckState();
 }
 
-class _MobileAState extends State<MobileAuthen> {
-  TextEditingController mobilecon = TextEditingController();
-  FirebaseAuth auth = FirebaseAuth.instance;
-  String verificationId = "";
+class _OtpCheckState extends State<OtpCheck> {
+  TextEditingController otpcon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "MOBILE AUTHENTICATION",
+          "OTP CHECK",
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
@@ -40,10 +42,10 @@ class _MobileAState extends State<MobileAuthen> {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.black, width: 1)),
                 child: TextField(
-                  controller: mobilecon,
+                  controller: otpcon,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      hintText: "Enter Your Mobilenumber",
+                      hintText: "Enter OTP",
                       contentPadding: EdgeInsets.all(10),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none),
@@ -54,7 +56,7 @@ class _MobileAState extends State<MobileAuthen> {
               padding: const EdgeInsets.only(top: 20),
               child: InkWell(
                 onTap: () {
-                  verifyPhonenumber();
+                  otpVerified();
                 },
                 child: Container(
                   height: 40,
@@ -65,7 +67,7 @@ class _MobileAState extends State<MobileAuthen> {
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                     child: Text(
-                      "Sent OTP",
+                      "Otp verified",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),
@@ -78,32 +80,22 @@ class _MobileAState extends State<MobileAuthen> {
     );
   }
 
-  Future<void> verifyPhonenumber() async {
-    await auth.verifyPhoneNumber(
-      phoneNumber: '+91${mobilecon.text.trim()}',
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Phone number automatically verfified")));
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Verification failed ${e.message}")));
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("OTP has been sent to your phone")));
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OtpCheck(
-                verificationId: this.verificationId,
-              ),
-            ));
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        this.verificationId = verificationId;
-      },
-    );
+  Future<void> otpVerified() async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: widget.verificationId, smsCode: otpcon.text.trim());
+
+      await FirebaseAuth.instance.signInWithCredential(credential).then(
+        (value) {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return MobileAuthen();
+            },
+          ));
+        },
+      );
+    } catch (ex) {
+      debugPrint("e==> ${ex.toString()}");
+    }
   }
 }
